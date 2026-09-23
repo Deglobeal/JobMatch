@@ -561,37 +561,58 @@ export default function Home() {
               />
             )}
 
-            <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              <input
-                value={location}
-                onChange={(event) => setLocation(event.target.value)}
-                placeholder="Remote / Nigeria"
-                className="rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none"
-              />
+            <div className="mt-7">
+              <p className="mb-3 text-sm font-semibold text-slate-700">
+                Search preferences
+              </p>
 
-              <select
-                value={employmentType}
-                onChange={(event) => setEmploymentType(event.target.value)}
-                className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm"
-              >
-                <option value="">Any type</option>
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>
-                <option value="Contract">Contract</option>
-                <option value="Internship">Internship</option>
-              </select>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-500">
+                    Location
+                  </label>
+                  <input
+                    value={location}
+                    onChange={(event) => setLocation(event.target.value)}
+                    placeholder="Remote / Nigeria"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
+                  />
+                </div>
 
-              <select
-                value={experienceLevel}
-                onChange={(event) => setExperienceLevel(event.target.value)}
-                className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm"
-              >
-                <option value="">Any level</option>
-                <option value="Entry level">Entry level</option>
-                <option value="Junior">Junior</option>
-                <option value="Mid level">Mid level</option>
-                <option value="Senior">Senior</option>
-              </select>
+                <div>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-500">
+                    Employment
+                  </label>
+                  <select
+                    value={employmentType}
+                    onChange={(event) => setEmploymentType(event.target.value)}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
+                  >
+                    <option value="">Any type</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Internship">Internship</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-500">
+                    Experience
+                  </label>
+                  <select
+                    value={experienceLevel}
+                    onChange={(event) => setExperienceLevel(event.target.value)}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
+                  >
+                    <option value="">Any level</option>
+                    <option value="Entry level">Entry level</option>
+                    <option value="Junior">Junior</option>
+                    <option value="Mid level">Mid level</option>
+                    <option value="Senior">Senior</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             {error && (
@@ -607,6 +628,28 @@ export default function Home() {
             >
               {loading ? "Searching the web..." : "Find Matching Jobs"}
             </button>
+          </div>
+
+          <div className="mx-auto mt-6 max-w-3xl">
+            <a
+              href="/tailor-cv"
+              className="group flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div>
+                <p className="text-sm font-semibold text-slate-900">
+                  Already have a job description?
+                </p>
+
+                <p className="mt-1 text-sm leading-6 text-slate-500">
+                  Upload your CV and paste the job description to get a
+                  detailed match analysis and CV improvement suggestions.
+                </p>
+              </div>
+
+              <span className="inline-flex shrink-0 items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition group-hover:bg-slate-700">
+                Analyze a Job →
+              </span>
+            </a>
           </div>
         </section>
       ) : (
