@@ -31,7 +31,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://127.0.0.1:3000",
-        "https://jobmatch-bice.vercel.app",
+        "https://jobmatchme.vercel.app",
     ],
     allow_credentials=False,
     allow_methods=["*"],
