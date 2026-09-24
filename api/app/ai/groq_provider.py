@@ -37,6 +37,39 @@ class GroqProvider(AIProvider):
 
         schema = response_model.model_json_schema()
 
+        def make_strict_schema(value):
+            if isinstance(value, dict):
+                if value.get("type") == "object":
+                    value["additionalProperties"] = False
+                    properties = value.get("properties", {})
+                    value["required"] = list(properties.keys())
+                    for property_schema in properties.values():
+                        make_strict_schema(property_schema)
+
+                for key in ("items", "anyOf", "oneOf", "allOf"):
+                    nested = value.get(key)
+                    if isinstance(nested, dict):
+                        make_strict_schema(nested)
+                    elif isinstance(nested, list):
+                        for item in nested:
+                            make_strict_schema(item)
+
+                for key, nested in value.items():
+                    if key not in {
+                        "properties",
+                        "items",
+                        "anyOf",
+                        "oneOf",
+                        "allOf",
+                    } and isinstance(nested, dict):
+                        make_strict_schema(nested)
+
+            elif isinstance(value, list):
+                for item in value:
+                    make_strict_schema(item)
+
+        make_strict_schema(schema)
+
         response = await self.client.chat.completions.create(
             model=self.model,
             messages=[
@@ -55,6 +88,7 @@ class GroqProvider(AIProvider):
                 "type": "json_schema",
                 "json_schema": {
                     "name": response_model.__name__,
+                    "strict": True,
                     "schema": schema,
                 },
             },
