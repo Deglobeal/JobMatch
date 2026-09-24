@@ -79,6 +79,16 @@ Rules:
         if not cv_analysis:
             raise ValueError("CV analysis is required.")
 
+        print(
+            "AGENT3 INPUT SIZES:",
+            {
+                "job_analysis_chars": len(str(job_analysis)),
+                "cv_analysis_chars": len(str(cv_analysis)),
+                "original_cv_text_chars": len(original_cv_text),
+                "deterministic_match_chars": len(str(deterministic_match or "Not provided")),
+            },
+        )
+
         user_prompt = f"""
 Compare the following job analysis with the following CV analysis.
 
