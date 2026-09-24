@@ -50,6 +50,7 @@ class GroqProvider(AIProvider):
                 },
             ],
             temperature=0,
+            max_completion_tokens=1500,
             response_format={
                 "type": "json_schema",
                 "json_schema": {
