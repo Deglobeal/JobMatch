@@ -70,29 +70,36 @@ class GroqProvider(AIProvider):
 
         make_strict_schema(schema)
 
-        response = await self.client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": system_prompt,
+        try:
+            response = await self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": system_prompt,
+                    },
+                    {
+                        "role": "user",
+                        "content": user_prompt,
+                    },
+                ],
+                temperature=0,
+                max_completion_tokens=1500,
+                response_format={
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": response_model.__name__,
+                        "strict": True,
+                        "schema": schema,
+                    },
                 },
-                {
-                    "role": "user",
-                    "content": user_prompt,
-                },
-            ],
-            temperature=0,
-            max_completion_tokens=1500,
-            response_format={
-                "type": "json_schema",
-                "json_schema": {
-                    "name": response_model.__name__,
-                    "strict": True,
-                    "schema": schema,
-                },
-            },
-        )
+            )
+        except Exception as error:
+            print(
+                f"Groq structured-output request failed: "
+                f"{type(error).__name__}: {error}"
+            )
+            raise
 
         content = response.choices[0].message.content
 
