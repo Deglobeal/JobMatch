@@ -101,6 +101,16 @@ class GroqProvider(AIProvider):
             )
             raise
 
+        print(
+            "GROQ USAGE:",
+            {
+                "prompt_tokens": getattr(response.usage, "prompt_tokens", None),
+                "completion_tokens": getattr(response.usage, "completion_tokens", None),
+                "total_tokens": getattr(response.usage, "total_tokens", None),
+                "finish_reason": getattr(response.choices[0], "finish_reason", None),
+            },
+        )
+
         content = response.choices[0].message.content
 
         if not content:
