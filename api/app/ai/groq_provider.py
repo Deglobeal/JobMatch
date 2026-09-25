@@ -82,7 +82,7 @@ class GroqProvider(AIProvider):
                     + len(user_prompt)
                     + len(json.dumps(schema))
                 ),
-                "max_completion_tokens": 1500,
+                "max_completion_tokens": 7000,
             },
         )
 
@@ -100,6 +100,7 @@ class GroqProvider(AIProvider):
                     },
                 ],
                 temperature=0,
+                reasoning_effort="low",
                 max_completion_tokens=7000,
                 response_format={
                     "type": "json_schema",
