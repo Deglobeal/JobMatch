@@ -70,6 +70,22 @@ class GroqProvider(AIProvider):
 
         make_strict_schema(schema)
 
+        print(
+            "GROQ REQUEST:",
+            {
+                "response_model": response_model.__name__,
+                "system_prompt_chars": len(system_prompt),
+                "user_prompt_chars": len(user_prompt),
+                "schema_chars": len(json.dumps(schema)),
+                "total_input_chars": (
+                    len(system_prompt)
+                    + len(user_prompt)
+                    + len(json.dumps(schema))
+                ),
+                "max_completion_tokens": 1500,
+            },
+        )
+
         try:
             response = await self.client.chat.completions.create(
                 model=self.model,
